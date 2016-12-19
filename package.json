@@ -1,0 +1,16 @@
+{
+  "name": "zapier-dotstar",
+  "version": "0.0.0",
+  "description": "",
+  "main": "led.js",
+  "dependencies": {
+    "dotstar": "^1.0.0",
+    "pi-spi": "^1.0.1",
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "panurgy",
+  "license": "GPL v3"
+}
