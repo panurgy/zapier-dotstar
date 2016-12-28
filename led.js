@@ -51,7 +51,7 @@ var oldMarquee = function(r, g, b) {
 
 var marquee = require('./shows/marquee').marquee;
 var starburst= require('./shows/starburst').starburst;
-var rainbow = require('.shows/rainbow');
+var rainbow = require('./shows/rainbow').rainbow;
 
 var doShow = function() {
 	//marquee(ledStrip, 200,20,0); // Zapier orangish
