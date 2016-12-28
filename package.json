@@ -5,9 +5,11 @@
   "main": "led.js",
   "dependencies": {
     "dotstar": "^1.0.0",
-    "pi-spi": "^1.0.1",
+    "pi-spi": "^1.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "create-react-app": "^1.0.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

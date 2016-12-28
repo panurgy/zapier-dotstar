@@ -1,0 +1,107 @@
+import React, { Component } from 'react';
+
+const VIRTUAL_LED_RADIUS = 3;
+
+class LedStrip extends Component {
+
+    makeLed(i, cx, cy) {
+        var ledIndex = this.props.ledIndex + i;
+        var rgbaObject = this.props.ledArray[ledIndex];
+
+        var fill = "black";
+        if (rgbaObject) {
+            fill = 'rgba(' + rgbaObject.r +
+                ', ' + rgbaObject.g +
+                ', ' + rgbaObject.b +
+                ', ' + rgbaObject.a + ')';
+        }
+        return (
+            <circle key={i} cx={cx} cy={cy}
+                r={VIRTUAL_LED_RADIUS} 
+                fill={fill} />
+        );
+    }
+
+    makeLine(i, x1, y1, x2, y2) {
+        return (
+            <line key={i} x1={x1} y1={y1}  x2={x2} y2={y2}
+                stroke="black" strokeWidth="1" />
+        );
+    }
+
+    makeVirtualLeds() {
+        var x1 = Math.round(this.props.x1);
+        var y1 = Math.round(this.props.y1);
+        var x2 = Math.round(this.props.x2);
+        var y2 = Math.round(this.props.y2);
+        var xdelta = x2 - x1;
+        var ydelta = y2 - y1;
+        var ledCount = this.props.ledCount;
+        var slope = ydelta / xdelta;
+        var ledsPerSide = Math.floor(ledCount/2);
+        var xstep = xdelta / ledsPerSide;
+        var ystep = ydelta / ledsPerSide;
+        
+        var array = [];
+        for (var i=0; i < ledsPerSide; i++) {
+            var cx = xstep * i + x1;
+            var cy = ystep * i + y1;
+
+
+            var cx1, cx2, cy1, cy2;
+            if (xdelta === 0) {
+                // vertical line
+                cx1 = cx-5;
+                cx2 = cx+5;
+                cy1 = cy;
+                cy2 = cy;
+            }
+            
+            else if (ydelta === 0) {
+                // horizontal line
+                cx1 = cx;
+                cx2 = cx;
+                cy1 = cy -5;
+                cy2 = cy +5;
+            }
+
+            else {
+                // use the slope to compute the coordinates
+                var xmod = xdelta / Math.abs(xdelta);
+                var ymod = ydelta / Math.abs(ydelta);
+
+                cx = ystep * i + x1;
+                cy = xstep * i + y1;
+
+                // TODO - this doesn't work for situations where the slope
+                // isn't 1 (or -1)
+                cx1 = cx + (xmod*slope*6);
+                cx2 = cx - (xmod*slope*6);
+                cy1 = cy - (ymod*slope*6);
+                cy2 = cy + (ymod*slope*6);
+            }
+
+            //array.push(this.makeLine(i, cx1, cy1, cx2, cy2));
+            array.push(this.makeLed(i, cx1, cy1));
+            array.push(this.makeLed(ledCount-i-1, cx2, cy2));
+        }
+        if (ledCount % 2 === 1) {
+            // add one on the end
+            array.push(this.makeLed(ledsPerSide, x2, y2));
+        }
+        return array;
+    };
+
+    render() {
+        return (
+            <g>
+            <line x1={this.props.x1} y1={this.props.y1} 
+                x2={this.props.x2} y2={this.props.y2} 
+                strokeWidth="2" stroke="#404040"/>
+            {this.makeVirtualLeds()}
+            </g>
+        );
+    }
+}
+
+export default LedStrip;
