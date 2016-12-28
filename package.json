@@ -5,6 +5,7 @@
   "main": "led.js",
   "dependencies": {
     "dotstar": "^1.0.0",
+    "onecolor": "^3.0.4",
     "pi-spi": "^1.0.1"
   },
   "devDependencies": {

@@ -51,12 +51,14 @@ var oldMarquee = function(r, g, b) {
 
 var marquee = require('./shows/marquee').marquee;
 var starburst= require('./shows/starburst').starburst;
+var rainbow = require('.shows/rainbow');
 
 var doShow = function() {
 	//marquee(ledStrip, 200,20,0); // Zapier orangish
 	//marquee(ledStrip, 200,10,10); // peppermint
 	//everett(ledStrip);
-	starburst(ledStrip, 200, 0, 0);
+	//starburst(ledStrip, 200, 0, 0);
+    rainbow(ledStrip);
 	setTimeout(doShow, 50);
 };
 

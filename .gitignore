@@ -3,4 +3,6 @@
 *.swo
 */**~
 npm-debug.log
-
+node_modules
+**/node_modules
+simulator/README.md
