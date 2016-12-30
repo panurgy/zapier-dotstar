@@ -11,7 +11,7 @@ var dotstar = require('dotstar')
 var SPI = require('pi-spi');
  
 spi = SPI.initialize('/dev/spidev0.0');
-var ledStripLength = 248;
+var ledStripLength = 251; // there's really 248, but 251 works more reliably
  
 var ledStrip = new dotstar.Dotstar(spi, {
   length: ledStripLength
