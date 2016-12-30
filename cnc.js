@@ -17,6 +17,8 @@ ledStrip.length = ledStripLength;
 
 shows = {};
 shows.solid = require('./shows/solid').show;
+shows.marquee = require('./shows/marquee').show;
+//shows.starburst= require('./shows/starburst').show; // TODO
 
 //var marquee = require('./shows/marquee').marquee;
 //var starburst= require('./shows/starburst').starburst;
@@ -70,6 +72,10 @@ var doShow = function() {
         currentSettings.bgshow = 'solid';
     }
     shows[currentSettings.bgshow](ledStrip, currentSettings);
+
+    if (shows[currentSettings.fgshow]) {
+        shows[currentSettings.fgshow](ledStrip, currentSettings);
+    }
 
     ledStrip.sync();
 	setTimeout(doShow, 50);
