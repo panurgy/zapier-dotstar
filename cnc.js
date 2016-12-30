@@ -23,6 +23,8 @@ shows.solid = require('./shows/solid').show;
 shows.marquee = require('./shows/marquee').show;
 shows.starburst= require('./shows/starburst').show;
 shows.rainbow = require('./shows/rainbow').show;
+shows.alternate = require('./shows/alternate').show;
+shows.spinner = require('./shows/spinner').show;
 
 var makeDefaultSettings = function() {
 
