@@ -1,6 +1,6 @@
 var secretKey = process.env.SECRET_KEY
 if (! secretKey) {
-    console.log("The 'secretKey' env var is not set, and will not be able to fetch settings from the remote/storage Command and Control");
+    console.log("The 'SECRET_KEY' env var is not set, and will not be able to fetch settings from the remote/storage Command and Control");
 }
 
 var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0 };
