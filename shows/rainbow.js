@@ -9,12 +9,11 @@ Highlight color (RGB)
 var rainbow = function(ledStrip) {
 	var ledStripLength = ledStrip.length;
 	var time = new Date().getTime();
-	var cycle =  (time / 100) % ledStripLength;
+	var cycle = (time / 45)  % ledStripLength;
 
 	for (var i = 0; i < ledStripLength; i++) {
-        var step = (i + cycle) / ledStripLength;
+        var step = Math.abs( 1.0 - (i + cycle)) / ledStripLength;
         var hue = step;
-        //step = step - Math.floor(step);
         var bg = color('#ff0000').hue(step, true);
         var r = Math.floor(bg.red()*255);
         var g = Math.floor(bg.green()*255);
