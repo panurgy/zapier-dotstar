@@ -37,7 +37,6 @@ class LedStrip extends Component {
         var xdelta = x2 - x1;
         var ydelta = y2 - y1;
         var ledCount = this.props.ledCount;
-        var slope = ydelta / xdelta;
         var ledsPerSide = Math.floor(ledCount/2);
         var xstep = xdelta / ledsPerSide;
         var ystep = ydelta / ledsPerSide;
@@ -67,21 +66,26 @@ class LedStrip extends Component {
 
             else {
                 // use the slope to compute the coordinates
+                var slope = ydelta / xdelta;
+                var reverseSlope = 1/slope;
+
+                cx = x1 + (xstep * i);
+                cy = y1 + (ystep * i);
+
+                // use the slope to compute the coordinates
                 var xmod = xdelta / Math.abs(xdelta);
                 var ymod = ydelta / Math.abs(ydelta);
 
-                cx = ystep * i + x1;
-                cy = xstep * i + y1;
-
-                // TODO - this doesn't work for situations where the slope
-                // isn't 1 (or -1)
-                cx1 = cx + (xmod*slope*6);
-                cx2 = cx - (xmod*slope*6);
-                cy1 = cy - (ymod*slope*6);
-                cy2 = cy + (ymod*slope*6);
+                // Note to self - this works for lines where the slope is 1,
+                //   but things get a bit funky
+                cx1 = cx + (xmod*reverseSlope*6);
+                cx2 = cx - (xmod*reverseSlope*6);
+                cy1 = cy - (ymod*reverseSlope*6);
+                cy2 = cy + (ymod*reverseSlope*6);
             }
 
-            //array.push(this.makeLine(i, cx1, cy1, cx2, cy2));
+            //array.push(this.makeLed(i, cx, cy));
+            
             array.push(this.makeLed(i, cx1, cy1));
             array.push(this.makeLed(ledCount-i-1, cx2, cy2));
         }

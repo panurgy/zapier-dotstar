@@ -37,8 +37,7 @@ class App extends Component {
             var sin = Math.sin(rads);
             var cos = Math.cos(rads);
             var x2 = x1 + (STRAND_LENGTH * sin);
-            var y2 = y1 + (STRAND_LENGTH * cos);
-
+            var y2 = y1 - (STRAND_LENGTH * cos);
             array.push(this.makeAnLedStrip(i, x2, y2));
         }
         return array;

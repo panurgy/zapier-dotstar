@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
+//var SHOWS_DIR = './../../shows/';
 var shows = {};
+// Note to self - can't use SHOWS_DIR below, because it confuses webpack
 shows.solid = require('./../../shows/solid').show;
 shows.marquee = require('./../../shows/marquee').show;
 shows.starburst= require('./../../shows/starburst').show;
 shows.rainbow = require('./../../shows/rainbow').show;
+shows.alternate = require('./../../shows/alternate').show;
+shows.spinner = require('./../../shows/spinner').show;
 
 const NUM_OF_LEDS = 248;
 
@@ -43,15 +47,16 @@ var virtualLeds = {
   }
 };
 
-
 var doShow = function() {
     // ## Pick a background option - solid color, or rainbow
 	shows.solid(virtualLeds, {r: 255, g: 100, b: 0, a: 1} );
 	//shows.rainbow(virtualLeds);
 
-    // then pick a foreground/effect - starburst, or marquee
-	shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+    // then pick a foreground/effect
+	//shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	//shows.alternate(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	//shows.marquee(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	shows.spinner(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 
     virtualLeds.sync();
 	setTimeout(doShow, 50);
