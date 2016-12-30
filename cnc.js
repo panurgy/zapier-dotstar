@@ -3,6 +3,9 @@ if (! secretKey) {
     console.log("The 'secretKey' env var is not set, and will not be able to fetch settings from the remote/storage Command and Control");
 }
 
+var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0 };
+var DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200 };
+
 var fetch = require('node-fetch');
 var dotstar = require('dotstar')
 var SPI = require('pi-spi');
@@ -15,14 +18,11 @@ var ledStrip = new dotstar.Dotstar(spi, {
 });
 ledStrip.length = ledStripLength;
 
-shows = {};
+var shows = {};
 shows.solid = require('./shows/solid').show;
 shows.marquee = require('./shows/marquee').show;
-//shows.starburst= require('./shows/starburst').show; // TODO
-
-//var marquee = require('./shows/marquee').marquee;
-//var starburst= require('./shows/starburst').starburst;
-//var rainbow = require('./shows/rainbow').rainbow;
+shows.starburst= require('./shows/starburst').show;
+shows.rainbow = require('./shows/rainbow').show;
 
 var makeDefaultSettings = function() {
 
@@ -71,10 +71,12 @@ var doShow = function() {
     if (!shows[currentSettings.bgshow]) {
         currentSettings.bgshow = 'solid';
     }
-    shows[currentSettings.bgshow](ledStrip, currentSettings);
+    var bgcolor = currentSettings.bgcolor || DEFAULT_BG_COLOR;
+    shows[currentSettings.bgshow](ledStrip, bgcolor);
 
     if (shows[currentSettings.fgshow]) {
-        shows[currentSettings.fgshow](ledStrip, currentSettings);
+        var fgcolor = currentSettings.fgcolor || DEFAULT_FG_COLOR;
+        shows[currentSettings.fgshow](ledStrip, fgcolor);
     }
 
     ledStrip.sync();

@@ -1,10 +1,8 @@
 var color = require('onecolor');
 
 /*
-Need: ledStrip, and it length
-Base color (RGB)
-Highlight color (RGB)
-*/
+ * Produces a "moving rainbow" color show on the entire display
+ */
 
 var rainbow = function(ledStrip) {
 	var ledStripLength = ledStrip.length;
@@ -24,4 +22,4 @@ var rainbow = function(ledStrip) {
 	ledStrip.sync();
 };
 
-module.exports.rainbow = rainbow;
+module.exports.show = rainbow;

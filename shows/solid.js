@@ -1,14 +1,14 @@
 /*
- * Uses the current bg setting to set all of the LEDs to a solid color.
+ * Uses the color values provided to set all of the LEDs to a solid color.
  */
 
-var solid = function(ledStrip, currentSettings) {
+var solid = function(ledStrip, colorObject) {
 	var ledStripLength = ledStrip.length;
 
-    var r = currentSettings.bgcolor.r;
-    var g = currentSettings.bgcolor.g;
-    var b = currentSettings.bgcolor.b;
-    var a = currentSettings.defaultAlpha || 0.5;
+    var r = colorObject.r;
+    var g = colorObject.g;
+    var b = colorObject.b;
+    var a = colorObject.a || 0.5;
 
 	for (var i = 0; i < ledStripLength; i++) {
         ledStrip.set(i, r, g, b, a);

@@ -1,12 +1,13 @@
 /*
-Need: ledStrip, and it length
-Base color (RGB)
-Highlight color (RGB)
-*/
-
-
-var starburst = function(ledStrip, r, g, b) {
+ * Overlays a "starburst" efffect on top of the display.
+ */
+var starburst = function(ledStrip, colorObject) {
 	var ledStripLength = ledStrip.length;
+
+    var r = colorObject.r;
+    var g = colorObject.g;
+    var b = colorObject.b;
+    var a = colorObject.a || 0.6;
 
 	var time = new Date().getTime();
 	// each consumes 100 ms, and there are 16 step total.
@@ -31,12 +32,9 @@ var starburst = function(ledStrip, r, g, b) {
 		}
 
 		if (isHighlight) {
-			ledStrip.set(i, 200, 200, 200, 0.6);
-		} else {
-			ledStrip.set(i, r, g, b, 0.6);
+			ledStrip.set(i, r, g, b, a);
 		}
 	}
-	ledStrip.sync();
 };
 
-module.exports.starburst= starburst;
+module.exports.show= starburst;

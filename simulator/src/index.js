@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
-import show from '../../shows/starburst';
-//import show from '../../shows/marquee';
-//import show from '../../shows/rainbow';
+var shows = {};
+shows.solid = require('./../../shows/solid').show;
+shows.marquee = require('./../../shows/marquee').show;
+shows.starburst= require('./../../shows/starburst').show;
+shows.rainbow = require('./../../shows/rainbow').show;
 
 const NUM_OF_LEDS = 248;
 
@@ -42,11 +44,16 @@ var virtualLeds = {
 };
 
 
-
 var doShow = function() {
-	show.starburst(virtualLeds, 200, 0, 0);
-	//show.marquee(virtualLeds, 200, 0, 0);
-    //show.rainbow(virtualLeds);
+    // ## Pick a background option - solid color, or rainbow
+	shows.solid(virtualLeds, {r: 255, g: 100, b: 0, a: 1} );
+	//shows.rainbow(virtualLeds);
+
+    // then pick a foreground/effect - starburst, or marquee
+	shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	//shows.marquee(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+
+    virtualLeds.sync();
 	setTimeout(doShow, 50);
 };
 

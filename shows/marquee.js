@@ -2,14 +2,13 @@
  * Overlays a "marquee" effect on top of the display
  */
 
-var marquee = function(ledStrip, currentSettings) {
+var marquee = function(ledStrip, colorObject) {
 	var ledStripLength = ledStrip.length;
 
-    var r = currentSettings.fgcolor.r;
-    var g = currentSettings.fgcolor.g;
-    var b = currentSettings.fgcolor.b;
-    var a = currentSettings.defaultAlpha || 0.5;
-    a += 0.1; // just a tad brighter
+    var r = colorObject.r;
+    var g = colorObject.g;
+    var b = colorObject.b;
+    var a = colorObject.a || 0.6;
 
 	var ms = new Date().getMilliseconds();
 	var step = Math.floor( ms / 100);
