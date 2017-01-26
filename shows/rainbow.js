@@ -6,9 +6,9 @@ var color = require('onecolor');
 
 var precomputed = {}; // 'i-cycle-ledStripLength': [r, g, b]
 var precompute = function(i, cycle, ledStripLength) {
-  var key = '' + i + '-' + cycle + '-' + ledStripLength;
+  var step = Math.abs(1.0 - (i + cycle)) / ledStripLength;
+  var key = '' + Math.round(step * 1000) / 1000; // rounded step as key
   if (!precomputed[key]) {
-    var step = Math.abs(1.0 - (i + cycle)) / ledStripLength;
     var bg = color('#ff0000').hue(step, true);
     var r = Math.floor(bg.red() * 255);
     var g = Math.floor(bg.green() * 255);
