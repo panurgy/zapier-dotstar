@@ -12,6 +12,7 @@ shows.starburst= require('./../../shows/starburst').show;
 shows.rainbow = require('./../../shows/rainbow').show;
 shows.alternate = require('./../../shows/alternate').show;
 shows.spinner = require('./../../shows/spinner').show;
+shows.walking = require('./../../shows/walking').show;
 
 const NUM_OF_LEDS = 248;
 
@@ -53,10 +54,12 @@ var doShow = function() {
 	//shows.rainbow(virtualLeds);
 
     // then pick a foreground/effect
-	//shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
-	//shows.alternate(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
-	//shows.marquee(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
-	shows.spinner(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	shows.rainbow(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.alternate(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.marquee(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.spinner(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.walking(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 
     virtualLeds.sync();
 	setTimeout(doShow, 50);
