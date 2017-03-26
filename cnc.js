@@ -1,4 +1,4 @@
-var secretKey = process.env.SECRET_KEY
+var secretKey = process.env.SECRET_KEY;
 if (! secretKey) {
     console.log("The 'SECRET_KEY' env var is not set, and will not be able to fetch settings from the remote/storage Command and Control");
 }
@@ -7,7 +7,7 @@ var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0 };
 var DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200 };
 
 var fetch = require('node-fetch');
-var dotstar = require('dotstar')
+var dotstar = require('dotstar');
 var SPI = require('pi-spi');
  
 spi = SPI.initialize('/dev/spidev0.0');
@@ -18,6 +18,20 @@ var ledStrip = new dotstar.Dotstar(spi, {
 });
 ledStrip.length = ledStripLength;
 
+// monkey-patch the "set" method, so that we can "get" the info later
+var ledInfo = [];
+var realSetFunction = ledStrip.set;
+var overrideSetFunction = function(pos, r, g, b, a) {
+  ledInfo[pos] = {r:r, g:g, b:b, a:a};
+  realSetFunction.apply(ledStrip, arguments);
+};
+ledStrip.set = overrideSetFunction;
+
+ledStrip.get = function(pos) {
+  return ledInfo[pos];
+};
+
+
 var shows = {};
 shows.solid = require('./shows/solid').show;
 shows.marquee = require('./shows/marquee').show;
@@ -25,6 +39,8 @@ shows.starburst= require('./shows/starburst').show;
 shows.rainbow = require('./shows/rainbow').show;
 shows.alternate = require('./shows/alternate').show;
 shows.spinner = require('./shows/spinner').show;
+shows.walking = require('./shows/walking').show;
+shows.ripple = require('./shows/ripple').show;
 
 var makeDefaultSettings = function() {
 
