@@ -5,6 +5,7 @@
   "main": "led.js",
   "dependencies": {
     "dotstar": "^1.0.0",
+    "forever": "^0.15.3",
     "lodash": "^4.17.4",
     "node-fetch": "^1.6.3",
     "onecolor": "^3.0.4",

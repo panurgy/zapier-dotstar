@@ -16,7 +16,6 @@ var ledStripLength = 251; // there's really 248, but 251 works more reliably
 var ledStrip = new dotstar.Dotstar(spi, {
   length: ledStripLength
 });
-ledStrip.length = ledStripLength;
 
 // monkey-patch the "set" method, so that we can "get" the info later
 var ledInfo = [];
