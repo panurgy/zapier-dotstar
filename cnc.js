@@ -3,6 +3,11 @@ if (! secretKey) {
     console.log("The 'SECRET_KEY' env var is not set, and will not be able to fetch settings from the remote/storage Command and Control");
 }
 
+var SIMPLE_TIMER_LOOP = true;
+if (process.env.SIMPLE_TIMER_LOOP == '0') {
+  SIMPLE_TIMER_LOOP = false;
+}
+
 var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0 };
 var DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200 };
 
@@ -40,6 +45,7 @@ shows.alternate = require('./shows/alternate').show;
 shows.spinner = require('./shows/spinner').show;
 shows.walking = require('./shows/walking').show;
 shows.ripple = require('./shows/ripple').show;
+shows.mainframe= require('./shows/mainframe').show;
 
 var makeDefaultSettings = function() {
 
@@ -85,6 +91,9 @@ fetchSettings();
 // Runs the "current" show settings, and then submits itself to run 
 //   again after a "very short" period of time.
 var doShow = function() {
+    // make a note of when we started
+    var startTime = new Date().getTime();
+
     if (!shows[currentSettings.bgshow]) {
         currentSettings.bgshow = 'solid';
     }
@@ -97,7 +106,21 @@ var doShow = function() {
     }
 
     ledStrip.sync();
-	setTimeout(doShow, 50);
+
+    if (SIMPLE_TIMER_LOOP) {
+      setTimeout(doShow, 50);
+    } else {
+      // see what time it is now
+      var endTime = new Date().getTime();
+      var elapsedTime = endTime - startTime;
+
+      // ideally, we want the "next run" to be 50ms from the start time
+      var nextRun = 50 - (elapsedTime);
+
+      // but if this loop took "too long" then just use zero
+      nextRun = Math.max(0, nextRun);
+      setTimeout(doShow, nextRun);
+    }
 };
 
 // start the show loop
