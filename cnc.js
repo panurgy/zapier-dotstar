@@ -92,5 +92,7 @@ var doShow = function() {
     }
 };
 
-// start the show loop
-doShow();
+// Start the show loop. We wait a bit so that the initial load of settings can
+// complete. That way if the loaded settings are radically different
+// from the default, you don't see an initial flicker of the LEDs
+setTimeout(doShow, 2000);
