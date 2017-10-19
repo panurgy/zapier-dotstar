@@ -1,7 +1,7 @@
 /* This fetch method pings the CnC server every second to load new settings
 */
 
-var fetch = require('node-fetch');
+const fetch = require('node-fetch');
 
 var fetchSettings = function(cb, secretKey) {
     if (!secretKey) {

@@ -2,7 +2,7 @@
 /* This fetch method reads from the local filesystem
 */
 
-var fs = require('fs');
+const fs = require('fs');
 
 var fetchSettings = function(cb, localSettingsFilename) {
     if (!localSettingsFilename) {

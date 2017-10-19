@@ -1,6 +1,5 @@
-var fetch = require('node-fetch');
-var dotstar = require('dotstar');
-var SPI = require('pi-spi');
+const dotstar = require('dotstar');
+const SPI = require('pi-spi');
 
 var SIMPLE_TIMER_LOOP = true;
 if (process.env.SIMPLE_TIMER_LOOP == '0') {
