@@ -1,4 +1,5 @@
 const ledStrip = require('./strip');
+const settingsLoaders = require('./settings-loaders');
 
 var SIMPLE_TIMER_LOOP = true;
 if (process.env.SIMPLE_TIMER_LOOP == '0') {
@@ -50,12 +51,10 @@ var secretKey = process.env.SECRET_KEY;
 var localSettings = process.env.SHOW_SETTINGS_FILE;
 if (secretKey) {
     console.log('SECRET_KEY set, will attempt to load settings from Command and Control server...');
-    var fetchCnC = require('./fetch-cnc');
-    fetchSettings = function() { fetchCnC(fetchSettingsCallback, secretKey); }
+    fetchSettings = function() { settingsLoaders.storage(fetchSettingsCallback, secretKey); }
 } else if (localSettings) {
     console.log('SHOW_SETTINGS_FILE set, will load from the provided file...');
-    var fetchFile = require('./fetch-file');
-    fetchSettings = function() { fetchFile(fetchSettingsCallback, localSettings); };
+    fetchSettings = function() { settingsLoaders.file(fetchSettingsCallback, localSettings); };
 } else {
     console.log("The 'SECRET_KEY' or 'SHOW_SETTINGS' env var is not set, falling back to default show settings...");
     fetchSettings = function() {};
