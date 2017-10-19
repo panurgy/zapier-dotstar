@@ -1,5 +1,6 @@
 const ledStrip = require('./strip');
 const settingsLoaders = require('./settings-loaders');
+const shows = require('./shows');
 
 var SIMPLE_TIMER_LOOP = true;
 if (process.env.SIMPLE_TIMER_LOOP == '0') {
@@ -21,17 +22,6 @@ ledStrip.set = overrideSetFunction;
 ledStrip.get = function(pos) {
   return ledInfo[pos];
 };
-
-var shows = {};
-shows.solid = require('./shows/solid').show;
-shows.marquee = require('./shows/marquee').show;
-shows.starburst= require('./shows/starburst').show;
-shows.rainbow = require('./shows/rainbow').show;
-shows.alternate = require('./shows/alternate').show;
-shows.spinner = require('./shows/spinner').show;
-shows.walking = require('./shows/walking').show;
-shows.ripple = require('./shows/ripple').show;
-shows.mainframe= require('./shows/mainframe').show;
 
 var currentSettings = {
     bgcolor: DEFAULT_BG_COLOR,
