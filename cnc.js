@@ -49,41 +49,29 @@ var currentSettings = {
     fgshow: 'starburst',
 };
 var fetchSettings;
+var fetchSettingsCallback = function(newSettings) {
+    if (newSettings) {
+        currentSettings = newSettings;
+    }
+};
 
 // Determine how we will get the show settings
 var secretKey = process.env.SECRET_KEY;
-var localSettings = process.env.SHOW_SETTINGS;
+var localSettings = process.env.SHOW_SETTINGS_FILE;
 if (secretKey) {
     console.log('SECRET_KEY set, will attempt to load settings from Command and Control server...');
+    var fetchCnC = require('./fetch-cnc');
+    fetchSettings = function() { fetchCnC(fetchSettingsCallback, secretKey); }
 } else if (localSettings) {
-    console.log('SHOW_SETTINGS set, will load from the provided file...');
+    console.log('SHOW_SETTINGS_FILE set, will load from the provided file...');
+    var fetchFile = require('./fetch-file');
+    fetchSettings = function() { fetchFile(fetchSettingsCallback, localSettings); };
 } else {
     console.log("The 'SECRET_KEY' or 'SHOW_SETTINGS' env var is not set, falling back to default show settings...");
+    fetchSettings = function() {};
 }
 
-// fetches the current JSON settings from the CNC server, and if successful,
-//    submits itself to run again a second from now.
-fetchSettings = function() {
-    if (!secretKey) {
-        return;
-    }
-
-    var request = 'https://store.zapier.com/api/records?secret=' + secretKey;
-
-    fetch(request).then( function(result) {
-        return result.json();
-    })
-    .then( function(json) {
-        if (json) {
-            currentSettings = json;
-            setTimeout(fetchSettings, 1000);
-        } else {
-            console.log("Unable to retrieve JSON from CnC server", result.text());
-        }
-    });
-};
-
-// Starts the fetch loop for settings from the CnC server
+// Starts the fetch loop for settings
 fetchSettings();
 
 // Runs the "current" show settings, and then submits itself to run 
@@ -123,4 +111,3 @@ var doShow = function() {
 
 // start the show loop
 doShow();
-
