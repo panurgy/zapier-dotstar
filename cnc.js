@@ -1,21 +1,12 @@
-const dotstar = require('dotstar');
-const SPI = require('pi-spi');
+const ledStrip = require('./strip');
 
 var SIMPLE_TIMER_LOOP = true;
 if (process.env.SIMPLE_TIMER_LOOP == '0') {
   SIMPLE_TIMER_LOOP = false;
 }
 
-var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0, a: 0.5 };
-var DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200, a: 0.5 };
-
-// Setup the device
-spi = SPI.initialize('/dev/spidev0.0');
-var ledStripLength = 251; // there's really 248, but 251 works more reliably
- 
-var ledStrip = new dotstar.Dotstar(spi, {
-  length: ledStripLength
-});
+const DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0, a: 0.5 };
+const DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200, a: 0.5 };
 
 // monkey-patch the "set" method so that we can "get" the info later
 var ledInfo = [];
