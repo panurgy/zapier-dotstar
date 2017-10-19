@@ -1,6 +1,6 @@
-
-/* This fetch method reads from the local filesystem
-*/
+/*
+ * This loader reads color settings from the local filesystem.
+ */
 
 const fs = require('fs');
 

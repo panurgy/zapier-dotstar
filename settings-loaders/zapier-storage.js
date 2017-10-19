@@ -1,4 +1,5 @@
-/* This fetch method pings the CnC server every second to load new settings
+/*
+ * This loader pings a Zapier Storage key every second to load new color settings
 */
 
 const fetch = require('node-fetch');
