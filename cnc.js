@@ -7,8 +7,8 @@ if (process.env.SIMPLE_TIMER_LOOP == '0') {
   SIMPLE_TIMER_LOOP = false;
 }
 
-var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0 };
-var DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200 };
+var DEFAULT_BG_COLOR = { r: 200, g: 20, b: 0, a: 0.5 };
+var DEFAULT_FG_COLOR = { r: 200, g: 200, b: 200, a: 0.5 };
 
 // Setup the device
 spi = SPI.initialize('/dev/spidev0.0');
@@ -47,7 +47,6 @@ var currentSettings = {
     bgshow: 'solid',
     fgcolor: DEFAULT_FG_COLOR,
     fgshow: 'starburst',
-    defaultAlpha: 0.5
 };
 var fetchSettings;
 
