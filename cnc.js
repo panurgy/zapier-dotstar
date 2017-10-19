@@ -29,29 +29,33 @@ var currentSettings = {
     fgcolor: DEFAULT_FG_COLOR,
     fgshow: 'starburst',
 };
-var fetchSettings;
-var fetchSettingsCallback = function(newSettings) {
-    if (newSettings) {
-        currentSettings = newSettings;
-    }
-};
 
 // Determine how we will get the show settings
+var fetchSettings;
 var secretKey = process.env.SECRET_KEY;
 var localSettings = process.env.SHOW_SETTINGS_FILE;
 if (secretKey) {
     console.log('SECRET_KEY set, will attempt to load settings from Command and Control server...');
-    fetchSettings = function() { settingsLoaders.storage(fetchSettingsCallback, secretKey); }
+    fetchSettings = function(loaderCb) { settingsLoaders.storage(loaderCb, secretKey); }
 } else if (localSettings) {
     console.log('SHOW_SETTINGS_FILE set, will load from the provided file...');
-    fetchSettings = function() { settingsLoaders.file(fetchSettingsCallback, localSettings); };
+    fetchSettings = function(loaderCb) { settingsLoaders.file(loaderCb, localSettings); };
 } else {
     console.log("The 'SECRET_KEY' or 'SHOW_SETTINGS' env var is not set, falling back to default show settings...");
-    fetchSettings = function() {};
+    fetchSettings = function(loaderCb) {};
 }
 
+var loaderCb = function(newSettings, err) {
+    if (err) {
+        console.error('Error Loading Setting: ' + err);
+    } else if (newSettings) {
+        currentSettings = newSettings;
+        setTimeout(fetchSettings, 1000, loaderCb);
+    }
+};
+
 // Starts the fetch loop for settings
-fetchSettings();
+fetchSettings(loaderCb);
 
 // Runs the "current" show settings, and then submits itself to run 
 //   again after a "very short" period of time.

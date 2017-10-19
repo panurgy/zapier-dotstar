@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 
 var fetchSettings = function(cb, secretKey) {
     if (!secretKey) {
-        cb();
+        cb(null, 'No secret key provided');
     }
 
     var request = 'https://store.zapier.com/api/records?secret=' + secretKey;
@@ -17,9 +17,8 @@ var fetchSettings = function(cb, secretKey) {
     .then( function(json) {
         if (json) {
             cb(json);
-            setTimeout(fetchSettings, 1000, cb, secretKey);
         } else {
-            console.log("Unable to retrieve JSON from CnC server", result.text());
+            cb(null, 'Unable to retrieve JSON from Zapier Storage. ' + result.text());
         }
     });
 };
