@@ -50,18 +50,35 @@ class LedStrip extends Component {
             var cx1, cx2, cy1, cy2;
             if (xdelta === 0) {
                 // vertical line
-                cx1 = cx-5;
-                cx2 = cx+5;
-                cy1 = cy;
-                cy2 = cy;
+                if (y1 > y2) {
+                    // vertical line, that points "upwards"
+                    cx1 = cx-5;
+                    cx2 = cx+5;
+                    cy1 = cy;
+                    cy2 = cy;
+                } else {
+                    // vertical line, that points "downward"
+                    cx1 = cx+5;
+                    cx2 = cx-5;
+                    cy1 = cy;
+                    cy2 = cy;
+                }
             }
             
             else if (ydelta === 0) {
-                // horizontal line
-                cx1 = cx;
-                cx2 = cx;
-                cy1 = cy -5;
-                cy2 = cy +5;
+                if (x1 < x2) {
+                    // horizontal line, that points to the right
+                    cx1 = cx;
+                    cx2 = cx;
+                    cy1 = cy-5;
+                    cy2 = cy+5;
+                } else {
+                    // horizontal line, that points to the left
+                    cx1 = cx;
+                    cx2 = cx;
+                    cy1 = cy+5;
+                    cy2 = cy-5;
+                }
             }
 
             else {
