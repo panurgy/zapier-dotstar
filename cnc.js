@@ -45,7 +45,8 @@ shows.alternate = require('./shows/alternate').show;
 shows.spinner = require('./shows/spinner').show;
 shows.walking = require('./shows/walking').show;
 shows.ripple = require('./shows/ripple').show;
-shows.mainframe= require('./shows/mainframe').show;
+shows.mainframe = require('./shows/mainframe').show;
+shows.horizontalrainbow = require('./shows/horizontal-rainbow').show;
 
 var makeDefaultSettings = function() {
 

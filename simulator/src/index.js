@@ -8,12 +8,14 @@ var shows = {};
 // Note to self - can't use SHOWS_DIR below, because it confuses webpack
 shows.solid = require('./../../shows/solid').show;
 shows.marquee = require('./../../shows/marquee').show;
-shows.starburst= require('./../../shows/starburst').show;
+shows.starburst = require('./../../shows/starburst').show;
 shows.rainbow = require('./../../shows/rainbow').show;
 shows.alternate = require('./../../shows/alternate').show;
 shows.spinner = require('./../../shows/spinner').show;
 shows.walking = require('./../../shows/walking').show;
 shows.ripple = require('./../../shows/ripple').show;
+shows.mainframe = require('./../../shows/mainframe').show;
+shows.horizontal_rainbow = require('./../../shows/horizontal-rainbow').show;
 
 const NUM_OF_LEDS = 248;
 
@@ -55,17 +57,19 @@ var virtualLeds = {
 
 var doShow = function() {
     // ## Pick a background option - solid color, or rainbow
-	shows.solid(virtualLeds, {r: 255, g: 100, b: 0, a: 1} );
-	//shows.rainbow(virtualLeds);
+	shows.solid(virtualLeds, {r: 0, g: 0, b: 0, a: 1} );
+	// shows.rainbow(virtualLeds);
 
     // then pick a foreground/effect
-	shows.rainbow(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.rainbow(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.alternate(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.marquee(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.spinner(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
-	// shows.walking(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
-	 shows.ripple(virtualLeds);
+	shows.walking(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.ripple(virtualLeds);
+    // shows.mainframe(virtualLeds, {r: 200, g: 200, b: 200, a: 1});
+    // shows.horizontalrainbow(virtualLeds);
 
     virtualLeds.sync();
 	setTimeout(doShow, 50);
