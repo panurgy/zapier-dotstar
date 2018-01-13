@@ -16,7 +16,7 @@ for (var i=0; i < IMAGE_LENGTH; i++) {
   var r = Math.floor(bg.red() * 255);
   var g = Math.floor(bg.green() * 255);
   var b = Math.floor(bg.blue() * 255);
-  console.log('r', r, 'g', g, 'b', b)
+  //console.log('r', r, 'g', g, 'b', b)
   PRECOMPUTED_ROWS[i] = r << 16 | g << 8 | b;
 }
 
@@ -43,13 +43,24 @@ var horizontal_rainbow = function(ledStrip) {
   var time = new Date().getTime();
   var cycle = Math.floor((time / 45) % PRECOMPUTED_ROWS.length);
   for (var i = 0; i < PRECOMPUTED_ROWS.length; i++) {
-    var value = PRECOMPUTED_ROWS[i + cycle];
-    if (value === undefined) value = 0xffffff
+    var offset = i + cycle;
+    if (offset >= PRECOMPUTED_ROWS.length) {
+        offset -= PRECOMPUTED_ROWS.length;
+    }
+    var value = PRECOMPUTED_ROWS[offset];
+
+    // defense for a rounding error on the bottom-most LED
+    if (value === undefined) value = 0xffffff;
+
     var r = (value & 0xff0000) >> 16;
     var g = (value & 0xff00) >> 8;
     var b = (value & 0xff);
+
+    // grab all of the LEDs at this y-coordinate
     leds = LEDS_PER_Y_COORDINATE[i];
     if (leds) {
+        // go through all of the LEDs at this y-coordinate
+        //    and set them to this color
         _.each(leds, function(index) {
             ledStrip.set(index, r, g, b, 0.6);
         })
@@ -61,3 +72,11 @@ var horizontal_rainbow = function(ledStrip) {
 
 module.exports.show = horizontal_rainbow;
 
+
+//var dummy = {
+//    set: function(index,r, g, b, a) {
+//        console.log("Setting LED " + index +": " + r +', ' + g + ', ' + b);
+//    },
+//    sync: function(){}
+//}
+//horizontal_rainbow(dummy);
