@@ -5,24 +5,59 @@ var _ = require('lodash')
 /*
  * Produces a "moving rainbow" color show on the entire display
  */
+LEDS_PER_ARM = 31;
 
-IMAGE_LENGTH = 32; // we only need 32 horizontal rows of color
-PRECOMPUTED_ROWS = [];
+RED = { r: 200, g: 0, b: 0 };
+ORANGE = { r: 200, g: 20, b: 0 };
+YELLOW = { r: 200, g: 200, b: 0 };
+GREEN = { r: 0, g: 200, b: 0 };
+CYAN = { r: 0, g: 200, b: 200 };
+BLUE = { r: 0, g: 0, b: 200 };
+VIOLET= { r: 200, g: 0, b: 200 };
 
-// precalculate the colors to be displayed
-for (var i=0; i < IMAGE_LENGTH; i++) { 
-  var step = Math.abs(1.0 - i) / IMAGE_LENGTH;
-  var bg = color('#ff0000').hue(step, true);
-  var r = Math.floor(bg.red() * 255);
-  var g = Math.floor(bg.green() * 255);
-  var b = Math.floor(bg.blue() * 255);
-  //console.log('r', r, 'g', g, 'b', b)
-  PRECOMPUTED_ROWS[i] = r << 16 | g << 8 | b;
-}
+PRECOMPUTED_ROWS = [
+    RED,
+    RED,
+    RED,
+    RED,
+
+    ORANGE,
+    ORANGE,
+    ORANGE,
+    ORANGE,
+
+    YELLOW,
+    YELLOW,
+    YELLOW,
+    YELLOW,
+
+    GREEN,
+    GREEN,
+    GREEN,
+    GREEN,
+
+    CYAN,
+    CYAN,
+    CYAN,
+    CYAN,
+
+    BLUE,
+    BLUE,
+    BLUE,
+    BLUE,
+
+    VIOLET,
+    VIOLET,
+    VIOLET,
+    VIOLET
+
+];
+
+IMAGE_LENGTH = PRECOMPUTED_ROWS.length;
 
 // then calculate where the f*ck the LEDs are in that virutal 
 //    coordinate plane
-LED_ARRAY = mapGeometry(31, IMAGE_LENGTH, IMAGE_LENGTH)
+LED_ARRAY = mapGeometry(LEDS_PER_ARM, IMAGE_LENGTH, IMAGE_LENGTH)
 
 // This is the REALLY important part - the LEDs sorted by y-coordinate.
 LEDS_PER_Y_COORDINATE = {}
@@ -36,7 +71,7 @@ _.each(LED_ARRAY, function(entry, index) {
     LEDS_PER_Y_COORDINATE[y].push(index);
 });
 
-var horizontal_rainbow = function(ledStrip) {
+var horizontal_rainbow2 = function(ledStrip) {
   // ideally, we would build the LED_ARRAY based on the ledStrip info,
   //    but this isn't a perfect world....
 
@@ -50,11 +85,11 @@ var horizontal_rainbow = function(ledStrip) {
     var value = PRECOMPUTED_ROWS[offset];
 
     // defense for a rounding error on the bottom-most LED
-    if (value === undefined) value = 0xffffff;
+    if (value === undefined) value = {r: 255, g: 255, b: 255} 
 
-    var r = (value & 0xff0000) >> 16;
-    var g = (value & 0xff00) >> 8;
-    var b = (value & 0xff);
+    var r = value.r;
+    var g = value.g;
+    var b = value.b;
 
     // grab all of the LEDs at this y-coordinate
     leds = LEDS_PER_Y_COORDINATE[i];
@@ -70,7 +105,7 @@ var horizontal_rainbow = function(ledStrip) {
   ledStrip.sync();
 };
 
-module.exports.show = horizontal_rainbow;
+module.exports.show = horizontal_rainbow2;
 
 
 //var dummy = {
@@ -79,4 +114,4 @@ module.exports.show = horizontal_rainbow;
 //    },
 //    sync: function(){}
 //}
-//horizontal_rainbow(dummy);
+//horizontal_rainbow2(dummy);

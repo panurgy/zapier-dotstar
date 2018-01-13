@@ -141,4 +141,4 @@ module.exports = {
 }
 
 // Useful for testing...
-console.log(mapGeometry(31, 100, 100));
+//console.log(mapGeometry(31, 100, 100));
