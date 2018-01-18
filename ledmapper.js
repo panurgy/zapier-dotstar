@@ -14,13 +14,13 @@
 // The number of "virtual pixels" to use for the arms.  Since each
 //   arm has two LED strips, this is the "width" between them.
 //   Hint: an odd number works best.
-var VIRTUAL_ARM_WIDTH = 3;
+var VIRTUAL_ARM_WIDTH = 1;
 
 /**
  * Given an x-y coordinate plane of some width and height, determine
  * the approximate location of each LED within that coordinate plane.
  *
- * NOTE: This assumes First Quadrant (the origin is the bottom-left corner)
+ * NOTE: This assumes Fourth Quadrant (the origin is the bottom-left corner)
  */
 function mapGeometry(ledsPerArm, coordinateWidth, coordinateHeight) {
     // find the center of the coordinate plane
@@ -141,4 +141,4 @@ module.exports = {
 }
 
 // Useful for testing...
-//console.log(mapGeometry(31, 100, 100));
+//console.log(mapGeometry(31, 32, 32));
