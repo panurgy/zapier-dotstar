@@ -13,9 +13,9 @@ YELLOW = { r: 200, g: 200, b: 0 };
 GREEN = { r: 0, g: 200, b: 0 };
 CYAN = { r: 0, g: 200, b: 200 };
 BLUE = { r: 0, g: 0, b: 200 };
-VIOLET= { r: 200, g: 0, b: 200 };
+VIOLET = { r: 200, g: 0, b: 200 };
 
-PRECOMPUTED_ROWS = [
+PRECOMPUTED_ROWS2 = [
     RED,
     RED,
     RED,
@@ -49,11 +49,10 @@ PRECOMPUTED_ROWS = [
     VIOLET,
     VIOLET,
     VIOLET,
-    VIOLET
-
+    VIOLET,
 ];
 
-IMAGE_LENGTH = PRECOMPUTED_ROWS.length;
+IMAGE_LENGTH = PRECOMPUTED_ROWS2.length;
 
 // then calculate where the f*ck the LEDs are in that virutal 
 //    coordinate plane
@@ -76,13 +75,13 @@ var horizontal_rainbow2 = function(ledStrip) {
   //    but this isn't a perfect world....
 
   var time = new Date().getTime();
-  var cycle = Math.floor((time / 200) % PRECOMPUTED_ROWS.length);
-  for (var i = 0; i < PRECOMPUTED_ROWS.length; i++) {
+  var cycle = Math.floor((time / 200) % PRECOMPUTED_ROWS2.length);
+  for (var i = 0; i < PRECOMPUTED_ROWS2.length; i++) {
     var offset = i + cycle;
-    if (offset >= PRECOMPUTED_ROWS.length) {
-        offset -= PRECOMPUTED_ROWS.length;
+    if (offset >= PRECOMPUTED_ROWS2.length) {
+        offset -= PRECOMPUTED_ROWS2.length;
     }
-    var value = PRECOMPUTED_ROWS[offset];
+    var value = PRECOMPUTED_ROWS2[offset];
 
     // defense for a rounding error on the bottom-most LED
     if (value === undefined) value = {r: 255, g: 255, b: 255} 

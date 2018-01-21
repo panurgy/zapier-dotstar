@@ -5,40 +5,45 @@ var _ = require('lodash')
 /*
  * Produces a "moving rainbow" color show on the entire display
  */
-
-IMAGE_LENGTH = 32; // we only need 32 horizontal rows of color
+IMAGE_LENGTH = 40; // allocate 40 horizontal rows of color
 PRECOMPUTED_ROWS = [];
 
-// precalculate the colors to be displayed
-for (var i=0; i < IMAGE_LENGTH; i++) { 
-  var step = Math.abs(1.0 - i) / IMAGE_LENGTH;
-  var bg = color('#ff0000').hue(step, true);
-  var r = Math.floor(bg.red() * 255);
-  var g = Math.floor(bg.green() * 255);
-  var b = Math.floor(bg.blue() * 255);
-  //console.log('r', r, 'g', g, 'b', b)
-  PRECOMPUTED_ROWS[i] = r << 16 | g << 8 | b;
-}
-
-// then calculate where the f*ck the LEDs are in that virutal 
-//    coordinate plane
-LED_ARRAY = mapGeometry(31, IMAGE_LENGTH, IMAGE_LENGTH)
-
-// This is the REALLY important part - the LEDs sorted by y-coordinate.
-LEDS_PER_Y_COORDINATE = {}
-
-_.each(LED_ARRAY, function(entry, index) {
-    var entry = LED_ARRAY[index];
-    var y = entry.y;
-    if (!LEDS_PER_Y_COORDINATE[y]) {
-        LEDS_PER_Y_COORDINATE[y] = [];
+function precalculateRows() {
+    if (PRECOMPUTED_ROWS.length > 0) {
+        return PRECOMPUTED_ROWS;
     }
-    LEDS_PER_Y_COORDINATE[y].push(index);
-});
+
+    // precalculate the colors to be displayed
+    for (var i=0; i < IMAGE_LENGTH; i++) { 
+      var step = Math.abs(1.0 - i) / IMAGE_LENGTH;
+      var bg = color('#ff0000').hue(step, true);
+      var r = Math.floor(bg.red() * 255);
+      var g = Math.floor(bg.green() * 255);
+      var b = Math.floor(bg.blue() * 255);
+      PRECOMPUTED_ROWS[i] = { r: r, g: g, b: b }
+    }
+
+    // then calculate where the f*ck the LEDs are in that virutal 
+    //    coordinate plane
+    LED_ARRAY = mapGeometry(31, IMAGE_LENGTH, IMAGE_LENGTH)
+
+    // This is the REALLY important part - the LEDs sorted by y-coordinate.
+    LEDS_PER_Y_COORDINATE = {}
+
+    _.each(LED_ARRAY, function(entry, index) {
+        var entry = LED_ARRAY[index];
+        var y = entry.y;
+        if (!LEDS_PER_Y_COORDINATE[y]) {
+            LEDS_PER_Y_COORDINATE[y] = [];
+        }
+        LEDS_PER_Y_COORDINATE[y].push(index);
+    });
+}
 
 var horizontal_rainbow = function(ledStrip) {
   // ideally, we would build the LED_ARRAY based on the ledStrip info,
   //    but this isn't a perfect world....
+  precalculateRows();
 
   var time = new Date().getTime();
   var cycle = Math.floor((time / 100) % PRECOMPUTED_ROWS.length);
@@ -50,11 +55,11 @@ var horizontal_rainbow = function(ledStrip) {
     var value = PRECOMPUTED_ROWS[offset];
 
     // defense for a rounding error on the bottom-most LED
-    if (value === undefined) value = 0xffffff;
+    if (value === undefined) value = {r: 255, g: 255, b: 255};
 
-    var r = (value & 0xff0000) >> 16;
-    var g = (value & 0xff00) >> 8;
-    var b = (value & 0xff);
+    var r = value.r;
+    var g = value.g;
+    var b = value.b;
 
     // grab all of the LEDs at this y-coordinate
     leds = LEDS_PER_Y_COORDINATE[i];
@@ -62,6 +67,7 @@ var horizontal_rainbow = function(ledStrip) {
         // go through all of the LEDs at this y-coordinate
         //    and set them to this color
         _.each(leds, function(index) {
+            //console.log("setting LED " + index +" to r=" + r +", g=" + g + ", b=" + b);
             ledStrip.set(index, r, g, b, 0.6);
         })
      }
@@ -73,10 +79,18 @@ var horizontal_rainbow = function(ledStrip) {
 module.exports.show = horizontal_rainbow;
 
 
-//var dummy = {
-//    set: function(index,r, g, b, a) {
+var dummy = {
+    set: function(index,r, g, b, a) {
 //        console.log("Setting LED " + index +": " + r +', ' + g + ', ' + b);
-//    },
-//    sync: function(){}
-//}
+    },
+    sync: function(){}
+}
+
+
 //horizontal_rainbow(dummy);
+//console.log('=========================');
+//setTimeout(function() {
+//    horizontal_rainbow(dummy);
+//}, 5000);
+
+
