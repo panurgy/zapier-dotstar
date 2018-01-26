@@ -46,7 +46,7 @@ var horizontal_rainbow = function(ledStrip) {
   precalculateRows();
 
   var time = new Date().getTime();
-  var cycle = Math.floor((time / 100) % PRECOMPUTED_ROWS.length);
+  var cycle = Math.floor((time / 200) % PRECOMPUTED_ROWS.length);
   for (var i = 0; i < PRECOMPUTED_ROWS.length; i++) {
     var offset = i + cycle;
     if (offset >= PRECOMPUTED_ROWS.length) {
