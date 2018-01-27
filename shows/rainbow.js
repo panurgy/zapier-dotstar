@@ -18,13 +18,18 @@ var precompute = function(i, cycle, ledStripLength) {
   return precomputed[key];
 };
 
-var rainbow = function(ledStrip) {
+var rainbow = function(ledStrip, color) {
+  var alpha = (color || {})['a'];
+  if (isNaN(alpha + 0)) {
+    alpha = 0.6;
+  }
+
   var ledStripLength = ledStrip.length;
   var time = new Date().getTime();
   var cycle = Math.floor((time / 45) % ledStripLength);
   for (var i = 0; i < ledStripLength; i++) {
     var values = precompute(i, cycle, ledStripLength);
-    ledStrip.set(i, values[0], values[1], values[2], 0.6);
+    ledStrip.set(i, values[0], values[1], values[2], alpha);
   }
 
   ledStrip.sync();
