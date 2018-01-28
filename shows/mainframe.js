@@ -6,7 +6,7 @@ var reverse = function(s) {
 };
 
 // given a 32 char base 16 hash (string), render them onto the LED strip
-var renderHash = function(hash, ledStrip) {
+var renderHash = function(hash, ledStrip, alpha) {
     // So we're given a 32-char hash, like this:
     // 01 23 45 67 89 ab cd ef 01 23 45 67 89 ab cd ef 
     // Let's divvy that up into a "offset", a "quantity", and then RBG
@@ -20,7 +20,7 @@ var renderHash = function(hash, ledStrip) {
         var g = Number.parseInt(hash.substring(offset, offset+2), 16);
         offset += 2;
         var b = Number.parseInt(hash.substring(offset, offset+2), 16);
-        ledStrip.set(position + i, r, g, b, 0.6);
+        ledStrip.set(position + i, r, g, b, alpha);
     }
 };
 
@@ -42,10 +42,10 @@ var mainframe = function(ledStrip, colorObject) {
     var hash3 = crypto.createHash('md5').update(reverse(''+seed)).digest("hex");
     var hash4 = reverse(hash3);
 
-    renderHash(hash1, ledStrip);
-    renderHash(hash2, ledStrip);
-    renderHash(hash3, ledStrip);
-    renderHash(hash4, ledStrip);
+    renderHash(hash1, ledStrip, a);
+    renderHash(hash2, ledStrip, a);
+    renderHash(hash3, ledStrip, a);
+    renderHash(hash4, ledStrip, a);
     
 };
 
