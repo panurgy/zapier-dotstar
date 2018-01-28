@@ -70,7 +70,7 @@ _.each(LED_ARRAY, function(entry, index) {
     LEDS_PER_Y_COORDINATE[y].push(index);
 });
 
-var horizontal_rainbow2 = function(ledStrip) {
+var horizontal_rainbow2 = function(ledStrip, color) {
   // ideally, we would build the LED_ARRAY based on the ledStrip info,
   //    but this isn't a perfect world....
 
@@ -89,6 +89,7 @@ var horizontal_rainbow2 = function(ledStrip) {
     var r = value.r;
     var g = value.g;
     var b = value.b;
+    var a = color.a || 0.6;
 
     // grab all of the LEDs at this y-coordinate
     leds = LEDS_PER_Y_COORDINATE[i];
@@ -96,7 +97,7 @@ var horizontal_rainbow2 = function(ledStrip) {
         // go through all of the LEDs at this y-coordinate
         //    and set them to this color
         _.each(leds, function(index) {
-            ledStrip.set(index, r, g, b, 0.6);
+            ledStrip.set(index, r, g, b, a);
         })
      }
   }
