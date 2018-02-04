@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 /**
  * Poorly named file which provides a mapping between the display's
  * LEDs, and a two-dimensional coordinate plane (x,y)
@@ -14,8 +16,8 @@
 // The number of "virtual pixels" to use for the arms.  Since each
 //   arm has two LED strips, this is the "width" between them.
 //   Hint: an odd number works best.
-var VIRTUAL_ARM_WIDTH = 0.4;
-const CENTER_WIDTH_RATIO = 0.12; // borrowed from App.js
+var VIRTUAL_ARM_WIDTH = 1;
+const CENTER_WIDTH_RATIO = 0.15; // borrowed from App.js
 
 /**
  * Given an x-y coordinate plane of some width and height, determine
@@ -25,14 +27,13 @@ const CENTER_WIDTH_RATIO = 0.12; // borrowed from App.js
  */
 function mapGeometry(ledsPerArm, coordinateWidth, coordinateHeight) {
     // find the center of the coordinate plane
-    halfWidth = coordinateWidth / 2.0;
-    halfHeight = coordinateHeight / 2.0;
+    var halfWidth = coordinateWidth / 2.0;
+    var halfHeight = coordinateHeight / 2.0;
     // the virtual length of the arms is the smaller
     //    of the halfWidth or halfHeight
-    armLength = Math.min(halfWidth, halfHeight)
+    var armLength = Math.min(halfWidth, halfHeight);
 
     NUMBER_OF_ARMS = 8;
-    LEDS_PER_ARM = 31;
 
     // This will be the super important array of all the LED's
     //    x,y coordinates within the coordinate plane.  Each element
@@ -45,12 +46,12 @@ function mapGeometry(ledsPerArm, coordinateWidth, coordinateHeight) {
         var sin = Math.sin(rads);
         var cos = Math.cos(rads);
         var x1 = halfWidth;
-        var y1 = halfHeight
+        var y1 = halfHeight;
         x1 = x1 + ((armLength * CENTER_WIDTH_RATIO) * sin);
         y1 = y1 - ((armLength * CENTER_WIDTH_RATIO) * cos);
         var x2 = x1 + (armLength * sin);
         var y2 = y1 - (armLength * cos);
-        calculateCoordinates(ledCoordinates, LEDS_PER_ARM * i, LEDS_PER_ARM, x1, y1, x2, y2)
+        calculateCoordinates(ledCoordinates, ledsPerArm * i, ledsPerArm, x1, y1, x2, y2);
     }
 
     return ledCoordinates;
@@ -58,16 +59,16 @@ function mapGeometry(ledsPerArm, coordinateWidth, coordinateHeight) {
 
 function calculateCoordinates(ledCoordinates, ledOffset, ledCount, x1, y1, x2, y2) {
 
-    var x1 = Math.round(x1);
-    var y1 = Math.round(y1);
-    var x2 = Math.round(x2);
-    var y2 = Math.round(y2);
+    x1 = Math.round(x1);
+    y1 = Math.round(y1);
+    x2 = Math.round(x2);
+    y2 = Math.round(y2);
     var xdelta = x2 - x1;
     var ydelta = y2 - y1;
     var ledsPerSide = Math.floor(ledCount/2);
     var xstep = xdelta / ledsPerSide;
     var ystep = ydelta / ledsPerSide;
-        
+
     for (var i=0; i < ledsPerSide; i++) {
         var cx = xstep * i + x1;
         var cy = ystep * i + y1;
@@ -89,7 +90,7 @@ function calculateCoordinates(ledCoordinates, ledOffset, ledCount, x1, y1, x2, y
                 cy2 = cy;
             }
         }
-        
+
         else if (ydelta === 0) {
             if (x1 < x2) {
                 // horizontal line, that points to the right
@@ -137,7 +138,35 @@ function calculateCoordinates(ledCoordinates, ledOffset, ledCount, x1, y1, x2, y
 
 module.exports = {
     mapGeometry: mapGeometry
-}
+};
 
 // Useful for testing...
-//console.log(mapGeometry(31, 32, 32));
+var displayMappingToConsole = function(ledsPerArm, width, height) {
+  coordinates = mapGeometry(ledsPerArm, width, height);
+  console.log(coordinates);
+  var plot = [height];
+  _.each(coordinates, function(point) {
+    var x = point.x;
+    var y = point.y;
+    var row = plot[y];
+    if (! row) {
+      row = [];
+      plot[y] = row;
+    }
+    row[x] = 'x';
+  });
+
+  _.each(plot, function(row) {
+    var s = '';
+    _.each(row, function(point) {
+      if (point) {
+        s += 'x';
+      } else {
+        s += ' ';
+      }
+    });
+    console.log(s);
+  });
+};
+
+// displayMappingToConsole(31, 32, 32);

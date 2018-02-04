@@ -1,6 +1,6 @@
 var color = require('onecolor');
 var mapGeometry = require('../ledmapper').mapGeometry;
-var _ = require('lodash')
+var _ = require('lodash');
 
 /*
  * Produces a "moving rainbow" color show on the entire display
@@ -52,17 +52,17 @@ PRECOMPUTED_ROWS2 = [
     VIOLET,
 ];
 
-IMAGE_LENGTH = PRECOMPUTED_ROWS2.length - 3;
+IMAGE_LENGTH = PRECOMPUTED_ROWS2.length;
 
 // then calculate where the f*ck the LEDs are in that virutal 
 //    coordinate plane
-LED_ARRAY = mapGeometry(LEDS_PER_ARM, IMAGE_LENGTH, IMAGE_LENGTH)
+LED_ARRAY = mapGeometry(LEDS_PER_ARM, IMAGE_LENGTH, IMAGE_LENGTH);
 
 // This is the REALLY important part - the LEDs sorted by y-coordinate.
-LEDS_PER_Y_COORDINATE = {}
+LEDS_PER_Y_COORDINATE = {};
 
 _.each(LED_ARRAY, function(entry, index) {
-    var entry = LED_ARRAY[index];
+    entry = LED_ARRAY[index];
     var y = entry.y;
     if (!LEDS_PER_Y_COORDINATE[y]) {
         LEDS_PER_Y_COORDINATE[y] = [];
@@ -84,7 +84,7 @@ var horizontal_rainbow2 = function(ledStrip, color) {
     var value = PRECOMPUTED_ROWS2[offset];
 
     // defense for a rounding error on the bottom-most LED
-    if (value === undefined) value = {r: 255, g: 255, b: 255} 
+    if (value === undefined) value = {r: 255, g: 255, b: 255};
 
     var r = value.r;
     var g = value.g;
@@ -98,7 +98,7 @@ var horizontal_rainbow2 = function(ledStrip, color) {
         //    and set them to this color
         _.each(leds, function(index) {
             ledStrip.set(index, r, g, b, a);
-        })
+        });
      }
   }
 
