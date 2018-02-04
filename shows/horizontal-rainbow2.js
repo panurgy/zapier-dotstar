@@ -21,7 +21,9 @@ PRECOMPUTED_ROWS2 = [
     RED,
     RED,
     RED,
+    RED,
 
+    ORANGE,
     ORANGE,
     ORANGE,
     ORANGE,
@@ -33,25 +35,31 @@ PRECOMPUTED_ROWS2 = [
     YELLOW,
     YELLOW,
     YELLOW,
+    YELLOW,
 
     GREEN,
     GREEN,
     GREEN,
     GREEN,
     GREEN,
+    GREEN,
 
     CYAN,
     CYAN,
     CYAN,
     CYAN,
     CYAN,
+    CYAN,
 
     BLUE,
     BLUE,
     BLUE,
     BLUE,
     BLUE,
+    BLUE,
 
+    VIOLET,
+    VIOLET,
     VIOLET,
     VIOLET,
     VIOLET,
@@ -62,7 +70,7 @@ IMAGE_LENGTH = PRECOMPUTED_ROWS2.length;
 
 // then calculate where the f*ck the LEDs are in that virutal 
 //    coordinate plane
-LED_ARRAY = mapGeometry(LEDS_PER_ARM, IMAGE_LENGTH, IMAGE_LENGTH);
+LED_ARRAY = mapGeometry(LEDS_PER_ARM, 34, 34);
 
 // This is the REALLY important part - the LEDs sorted by y-coordinate.
 LEDS_PER_Y_COORDINATE = {};

@@ -5,7 +5,7 @@ var _ = require('lodash')
 /*
  * Produces a "moving rainbow" color show on the entire display
  */
-IMAGE_LENGTH = 40; // allocate 40 horizontal rows of color
+IMAGE_LENGTH = 44; // allocate 40 horizontal rows of color
 PRECOMPUTED_ROWS = [];
 
 function precalculateRows() {
@@ -16,7 +16,7 @@ function precalculateRows() {
     // precalculate the colors to be displayed
     for (var i=0; i < IMAGE_LENGTH; i++) { 
       var step = Math.abs(1.0 - i) / IMAGE_LENGTH;
-      var bg = color('#ff0000').hue(step, true);
+      var bg = color('#ff00ff').hue(step, true);
       var r = Math.floor(bg.red() * 255);
       var g = Math.floor(bg.green() * 255);
       var b = Math.floor(bg.blue() * 255);
@@ -25,7 +25,7 @@ function precalculateRows() {
 
     // then calculate where the f*ck the LEDs are in that virutal 
     //    coordinate plane
-    LED_ARRAY = mapGeometry(31, IMAGE_LENGTH, IMAGE_LENGTH)
+    LED_ARRAY = mapGeometry(31, 34, 34)
 
     // This is the REALLY important part - the LEDs sorted by y-coordinate.
     LEDS_PER_Y_COORDINATE = {}
