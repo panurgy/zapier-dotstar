@@ -14,7 +14,7 @@
 // The number of "virtual pixels" to use for the arms.  Since each
 //   arm has two LED strips, this is the "width" between them.
 //   Hint: an odd number works best.
-var VIRTUAL_ARM_WIDTH = 1;
+var VIRTUAL_ARM_WIDTH = 0.4;
 const CENTER_WIDTH_RATIO = 0.12; // borrowed from App.js
 
 /**
