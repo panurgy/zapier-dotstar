@@ -16,6 +16,7 @@ shows.walking = require('./../../shows/walking').show;
 shows.ripple = require('./../../shows/ripple').show;
 shows.mainframe = require('./../../shows/mainframe').show;
 shows.horizontal_rainbow = require('./../../shows/horizontal-rainbow').show;
+shows.horizontal_rainbow2 = require('./../../shows/horizontal-rainbow2').show;
 
 const NUM_OF_LEDS = 248;
 
@@ -56,22 +57,23 @@ var virtualLeds = {
 };
 
 var doShow = function() {
-    // ## Pick a background option - solid color, or rainbow
+  // ## Pick a background option - solid color, or rainbow
 	shows.solid(virtualLeds, {r: 0, g: 0, b: 0, a: 1} );
 	// shows.rainbow(virtualLeds);
 
-    // then pick a foreground/effect
+  // then pick a foreground/effect
 	// shows.rainbow(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.starburst(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.alternate(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.marquee(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.spinner(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
-	shows.walking(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
+	// shows.walking(virtualLeds, {r: 200, g: 200, b: 200, a: 1} );
 	// shows.ripple(virtualLeds);
-    // shows.mainframe(virtualLeds, {r: 200, g: 200, b: 200, a: 1});
-    // shows.horizontalrainbow(virtualLeds);
+  // shows.mainframe(virtualLeds, {r: 200, g: 200, b: 200, a: 1});
+  // shows.horizontal_rainbow(virtualLeds, {});
+  shows.horizontal_rainbow2(virtualLeds, {});
 
-    virtualLeds.sync();
+  virtualLeds.sync();
 	setTimeout(doShow, 50);
 };
 

@@ -52,7 +52,7 @@ PRECOMPUTED_ROWS2 = [
     VIOLET,
 ];
 
-IMAGE_LENGTH = PRECOMPUTED_ROWS2.length;
+IMAGE_LENGTH = PRECOMPUTED_ROWS2.length - 3;
 
 // then calculate where the f*ck the LEDs are in that virutal 
 //    coordinate plane

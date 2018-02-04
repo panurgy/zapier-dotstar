@@ -14,7 +14,8 @@
 // The number of "virtual pixels" to use for the arms.  Since each
 //   arm has two LED strips, this is the "width" between them.
 //   Hint: an odd number works best.
-var VIRTUAL_ARM_WIDTH = 1;
+var VIRTUAL_ARM_WIDTH = 0.4;
+const CENTER_WIDTH_RATIO = 0.12; // borrowed from App.js
 
 /**
  * Given an x-y coordinate plane of some width and height, determine
@@ -39,18 +40,17 @@ function mapGeometry(ledsPerArm, coordinateWidth, coordinateHeight) {
     ledCoordinates = {};
 
     for (var i=0; i < NUMBER_OF_ARMS; i++) {
-    
-        var angle = (360/NUMBER_OF_ARMS) * i;
-        var rads = angle/180 * Math.PI;
+        var angle = (360 / NUMBER_OF_ARMS) * i;
+        var rads = angle / 180 * Math.PI;
         var sin = Math.sin(rads);
         var cos = Math.cos(rads);
-
         var x1 = halfWidth;
         var y1 = halfHeight
+        x1 = x1 + ((armLength * CENTER_WIDTH_RATIO) * sin);
+        y1 = y1 - ((armLength * CENTER_WIDTH_RATIO) * cos);
         var x2 = x1 + (armLength * sin);
         var y2 = y1 - (armLength * cos);
-        
-        calculateCoordinates(ledCoordinates, LEDS_PER_ARM*i, LEDS_PER_ARM, x1, y1, x2, y2)
+        calculateCoordinates(ledCoordinates, LEDS_PER_ARM * i, LEDS_PER_ARM, x1, y1, x2, y2)
     }
 
     return ledCoordinates;
@@ -71,7 +71,6 @@ function calculateCoordinates(ledCoordinates, ledOffset, ledCount, x1, y1, x2, y
     for (var i=0; i < ledsPerSide; i++) {
         var cx = xstep * i + x1;
         var cy = ystep * i + y1;
-
 
         var cx1, cx2, cy1, cy2;
         if (xdelta === 0) {
