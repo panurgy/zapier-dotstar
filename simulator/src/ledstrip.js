@@ -22,13 +22,6 @@ class LedStrip extends Component {
         );
     }
 
-    makeLine(i, x1, y1, x2, y2) {
-        return (
-            <line key={i} x1={x1} y1={y1}  x2={x2} y2={y2}
-                stroke="black" strokeWidth="1" />
-        );
-    }
-
     makeVirtualLeds() {
         var x1 = Math.round(this.props.x1);
         var y1 = Math.round(this.props.y1);
@@ -45,7 +38,6 @@ class LedStrip extends Component {
         for (var i=0; i < ledsPerSide; i++) {
             var cx = xstep * i + x1;
             var cy = ystep * i + y1;
-
 
             var cx1, cx2, cy1, cy2;
             if (xdelta === 0) {
@@ -116,10 +108,12 @@ class LedStrip extends Component {
     render() {
         return (
             <g>
-            <line x1={this.props.x1} y1={this.props.y1} 
-                x2={this.props.x2} y2={this.props.y2} 
-                strokeWidth="2" stroke="#404040"/>
-            {this.makeVirtualLeds()}
+                <line
+                    x1={this.props.x1} y1={this.props.y1} 
+                    x2={this.props.x2} y2={this.props.y2} 
+                    strokeWidth="2" stroke="#cccccc"
+                />
+                {this.makeVirtualLeds()}
             </g>
         );
     }
