@@ -10,9 +10,8 @@ const STRAND_LENGTH = 250;
 
 // ====================================
 //const TOTAL_LIGHTS = NUMBER_OF_ARMS * LIGHTS_PER_ARM;
-const SIZE = STRAND_LENGTH * 2 + 20;
+const SIZE = (STRAND_LENGTH * 2) + CENTER_WIDTH + 50;
 const HALF_SIZE = SIZE / 2;
-
 
 
 class App extends Component {
