@@ -5,12 +5,12 @@ import LedStrip from './ledstrip';
 
 const NUMBER_OF_ARMS = 8;
 const LIGHTS_PER_ARM = 31;
-const CENTER_WIDTH = 30;
+const CENTER_WIDTH_RATIO = 0.12;
 const STRAND_LENGTH = 250;
 
 // ====================================
 //const TOTAL_LIGHTS = NUMBER_OF_ARMS * LIGHTS_PER_ARM;
-const SIZE = (STRAND_LENGTH * 2) + CENTER_WIDTH + 50;
+const SIZE = (STRAND_LENGTH * 2) + (STRAND_LENGTH * CENTER_WIDTH_RATIO) + 50;
 const HALF_SIZE = SIZE / 2;
 
 
@@ -38,8 +38,8 @@ class App extends Component {
             var sin = Math.sin(rads);
             var cos = Math.cos(rads);
             // offset from center
-            x1 = x1 + (CENTER_WIDTH * sin);
-            y1 = y1 - (CENTER_WIDTH * cos);
+            x1 = x1 + ((STRAND_LENGTH * CENTER_WIDTH_RATIO) * sin);
+            y1 = y1 - ((STRAND_LENGTH * CENTER_WIDTH_RATIO) * cos);
             var x2 = x1 + (STRAND_LENGTH * sin);
             var y2 = y1 - (STRAND_LENGTH * cos);
             array.push(this.makeAnLedStrip(i, x1, x2, y1, y2));
