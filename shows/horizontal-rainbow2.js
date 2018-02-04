@@ -20,7 +20,9 @@ PRECOMPUTED_ROWS2 = [
     RED,
     RED,
     RED,
+    RED,
 
+    ORANGE,
     ORANGE,
     ORANGE,
     ORANGE,
@@ -30,17 +32,21 @@ PRECOMPUTED_ROWS2 = [
     YELLOW,
     YELLOW,
     YELLOW,
+    YELLOW,
 
     GREEN,
     GREEN,
     GREEN,
     GREEN,
+    GREEN,
 
     CYAN,
     CYAN,
     CYAN,
     CYAN,
+    CYAN,
 
+    BLUE,
     BLUE,
     BLUE,
     BLUE,

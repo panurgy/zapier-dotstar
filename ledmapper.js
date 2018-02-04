@@ -54,6 +54,12 @@ function mapGeometry(ledsPerArm, coordinateWidth, coordinateHeight) {
         calculateCoordinates(ledCoordinates, ledsPerArm * i, ledsPerArm, x1, y1, x2, y2);
     }
 
+    // now cheat, and add 3 to all of the coordinates
+    _.each(ledCoordinates, function(point) {
+      point.x += 4;
+      point.y += 4;
+    });
+
     return ledCoordinates;
 }
 
@@ -132,6 +138,7 @@ function calculateCoordinates(ledCoordinates, ledOffset, ledCount, x1, y1, x2, y
         // add one on the end
         ledCoordinates[ledsPerSide+ledOffset] = {x: Math.round(x2), y: Math.round(y2)};
     }
+
     return ledCoordinates;
 
 }
@@ -143,7 +150,7 @@ module.exports = {
 // Useful for testing...
 var displayMappingToConsole = function(ledsPerArm, width, height) {
   coordinates = mapGeometry(ledsPerArm, width, height);
-  console.log(coordinates);
+  //console.log(coordinates);
   var plot = [height];
   _.each(coordinates, function(point) {
     var x = point.x;
@@ -169,4 +176,4 @@ var displayMappingToConsole = function(ledsPerArm, width, height) {
   });
 };
 
-// displayMappingToConsole(31, 32, 32);
+//displayMappingToConsole(31, 34, 34);
