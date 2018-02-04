@@ -11,7 +11,7 @@ const STRAND_LENGTH = 250;
 // ====================================
 //const TOTAL_LIGHTS = NUMBER_OF_ARMS * LIGHTS_PER_ARM;
 const SIZE = (STRAND_LENGTH * 2) + (STRAND_LENGTH * CENTER_WIDTH_RATIO) + 50;
-const HALF_SIZE = SIZE / 2;
+const CENTER_LOCATION = SIZE / 2;
 
 
 class App extends Component {
@@ -31,8 +31,8 @@ class App extends Component {
     makeLedstrips() {
         var array = [];
         for (var i=0; i < NUMBER_OF_ARMS; i++) {
-            var x1 = HALF_SIZE;
-            var y1 = HALF_SIZE;
+            var x1 = CENTER_LOCATION;
+            var y1 = CENTER_LOCATION;
             var angle = (360 / NUMBER_OF_ARMS) * i;
             var rads = angle / 180 * Math.PI;
             var sin = Math.sin(rads);
