@@ -48,6 +48,7 @@ shows.ripple = require('./shows/ripple').show;
 shows.mainframe = require('./shows/mainframe').show;
 shows.horizontalrainbow = require('./shows/horizontal-rainbow').show;
 shows.horizontalrainbow2 = require('./shows/horizontal-rainbow2').show;
+shows.blip = require('./shows/blip').show;
 
 var makeDefaultSettings = function() {
 
@@ -55,7 +56,7 @@ var makeDefaultSettings = function() {
         bgcolor: { r: 200, g: 20, b: 0 },
         bgshow: 'solid',
         fgcolor: { r: 200, g: 200, b:200 },
-        fgshow: 'starburst',
+        fgshow: 'blip',
         defaultAlpha: 0.5
     };
 };
